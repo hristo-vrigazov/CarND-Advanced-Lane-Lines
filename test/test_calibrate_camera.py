@@ -33,4 +33,4 @@ class Test(unittest.TestCase):
 
 	def test_calibrated_camera_can_undistort_image(self):
 		c = CalibratedCamera()
-		c.undistort("camera_cal/calibration1.jpg", "output_images/undistorted_example.jpg")
+		c.undistort("./test_images/test1.jpg", "output_images/undistorted_example.jpg")
