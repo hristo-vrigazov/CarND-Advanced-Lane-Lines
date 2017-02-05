@@ -16,6 +16,12 @@ class CalibratedCamera:
             self._calibrate_camera_by_chessboard_images(9, 6, 
                 camera_calibration_pickle, calibration_images_pattern)
 
+
+    def undistort(self, source_image_file, destination_image_file):
+        img = cv2.imread(source_image_file)
+        dst = cv2.undistort(img, self.mtx, self.dist, None, self.mtx)
+        cv2.imwrite(destination_image_file, dst)
+
     def _calibrate_camera_by_pickle(self, camera_calibration_pickle):
         print('Reading calibrated camera parameters from pickle file')
         with open(camera_calibration_pickle,"rb") as pickle_in:

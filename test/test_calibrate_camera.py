@@ -29,3 +29,8 @@ class Test(unittest.TestCase):
 		calibrated_camera = CalibratedCamera(pickle_file_name, images_pattern)
 		self.assertIsNotNone(calibrated_camera.mtx)
 		self.assertIsNotNone(calibrated_camera.dist)
+
+
+	def test_calibrated_camera_can_undistort_image(self):
+		c = CalibratedCamera()
+		c.undistort("camera_cal/calibration1.jpg", "output_images/undistorted_example.jpg")
