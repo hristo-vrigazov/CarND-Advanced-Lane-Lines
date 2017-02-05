@@ -5,6 +5,17 @@
 
 **Advanced Lane Finding Project**
 
+Quick commands:
+---
+To run unit tests:
+```
+green -r
+```
+To get test code coverage in html format:
+```
+coverage html 
+```
+
 The goals / steps of this project are the following:
 
 * Compute the camera calibration matrix and distortion coefficients given a set of chessboard images.
