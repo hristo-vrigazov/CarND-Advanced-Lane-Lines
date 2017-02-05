@@ -1,2 +1,4 @@
 *.p
 *.pyc
+examples/example.ipynb
+htmlcov/
