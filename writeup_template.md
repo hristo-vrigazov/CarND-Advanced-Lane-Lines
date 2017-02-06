@@ -29,7 +29,7 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-[test-undistorted]: ./output_images/test_undist "Undistorted test"
+[test-undistorted]: ./output_images/test_undist.jpg "Undistorted test"
 [distorted]: ./test_images/test1.jpg "Distorted"
 [undistorted]: ./output_images/undistorted_example.jpg "Undistorted"
 [image2]: ./test_images/test1.jpg "Road Transformed"
