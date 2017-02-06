@@ -29,7 +29,7 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-[image1]: ./examples/undistort_output.png "Undistorted"
+[test-undistorted]: ./output_images/test_undist "Undistorted test"
 [distorted]: ./test_images/test1.jpg "Distorted"
 [undistorted]: ./output_images/undistorted_example.jpg "Undistorted"
 [image2]: ./test_images/test1.jpg "Road Transformed"
@@ -61,7 +61,7 @@ I start by preparing "object points", which will be the (x, y, z) coordinates of
 
 I then used the output `objpoints` and `imgpoints` to compute the camera calibration and distortion coefficients using the `cv2.calibrateCamera()` function.  I then use this distortion correction to the test image using the `cv2.undistort()` function and obtained this result: 
 
-![alt text][image1]
+![alt text][test-undistorted]
 
 ###Pipeline (single images)
 

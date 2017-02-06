@@ -32,5 +32,9 @@ class Test(unittest.TestCase):
 
 
 	def test_calibrated_camera_can_undistort_image(self):
+		input_file = "./test_images/test1.jpg"
+		output_file = "output_images/undistorted_example.jpg"
 		c = CalibratedCamera()
-		c.undistort("./test_images/test1.jpg", "output_images/undistorted_example.jpg")
+		c.undistort_file(input_file, output_file)
+
+		self.assertTrue(os.path.exists(output_file))

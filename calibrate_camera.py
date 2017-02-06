@@ -17,7 +17,11 @@ class CalibratedCamera:
                 camera_calibration_pickle, calibration_images_pattern)
 
 
-    def undistort(self, source_image_file, destination_image_file):
+    def undistort(self, img):
+        return cv2.undistort(img, self.mtx, self.dist, None, self.mtx)
+        
+
+    def undistort_file(self, source_image_file, destination_image_file):
         img = cv2.imread(source_image_file)
         dst = cv2.undistort(img, self.mtx, self.dist, None, self.mtx)
         cv2.imwrite(destination_image_file, dst)
