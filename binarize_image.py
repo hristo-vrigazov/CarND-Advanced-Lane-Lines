@@ -1,6 +1,6 @@
 import numpy as np
 import cv2
-
+import matplotlib.pyplot as plt
 
 class ImageBinarizer:
 
@@ -10,6 +10,12 @@ class ImageBinarizer:
 	    combined_binary = np.zeros_like(S)
 	    combined_binary[(sobel_img == 1) & (S == 1)] = 1
 	    return combined_binary
+
+
+	def binarize_file(self, source_image_file, destination_image_file):
+		image = cv2.imread(source_image_file)
+		binarized = self.binarize(image)
+		plt.imsave(destination_image_file, binarized, cmap='gray')
 
 
 	def thresholded_s_channel(self, image, thresh=(90, 255)):
