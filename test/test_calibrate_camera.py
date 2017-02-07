@@ -4,7 +4,7 @@ import cv2
 
 from calibrate_camera import CalibratedCamera
 
-class Test(unittest.TestCase):
+class CalibratedCameraTest(unittest.TestCase):
 
 	def test_constuctor_sets_mtx_dist_if_pickle_is_not_available(self):
 		pickle_file_name = "something.p"
