@@ -1,5 +1,6 @@
 import unittest
 import os
+import cv2
 
 from calibrate_camera import CalibratedCamera
 
@@ -38,3 +39,13 @@ class Test(unittest.TestCase):
 		c.undistort_file(input_file, output_file)
 
 		self.assertTrue(os.path.exists(output_file))
+
+
+	def test_undistort_image(self):
+		input_file = "./test_images/test1.jpg"
+		image = cv2.imread(input_file)
+
+		c = CalibratedCamera()
+		undistorted_image = c.undistort(image)
+
+		self.assertTrue(undistorted_image.shape == image.shape)
