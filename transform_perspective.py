@@ -1,10 +1,10 @@
 import cv2
 import pickle
 
-class PerspectiveTransormer:
-	def __init__(self, src, dst):
-		self.M = cv2.getPerspectiveTransform(src, dst)
-		self.Minv = cv2.getPerspectiveTransform(dst, src)
+class PerspectiveTransformer:
+    def __init__(self, src, dst):
+        self.M = cv2.getPerspectiveTransform(src, dst)
+        self.Minv = cv2.getPerspectiveTransform(dst, src)
 
 
     def transform(self, img):

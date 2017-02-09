@@ -1,6 +1,7 @@
 import numpy as np
 import cv2
 import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
 
 class ImageBinarizer:
 
@@ -13,7 +14,7 @@ class ImageBinarizer:
 
 
 	def binarize_file(self, source_image_file, destination_image_file):
-		image = cv2.imread(source_image_file)
+		image = mpimg.imread(source_image_file)
 		binarized = self.binarize(image)
 		plt.imsave(destination_image_file, binarized, cmap='gray')
 
