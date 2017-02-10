@@ -75,7 +75,11 @@ After:
 ![alt text][undistorted]
 
 ####2. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.
-I used a combination of color and gradient thresholds to generate a binary image (thresholding steps at lines # through # in `another_file.py`).  Here's an example of my output for this step.  (note: this is not actually from one of the test images)
+
+I converted the image to HLS color space, and then used a threshold on the S channel to obtain a first
+binarized version of the image, see the file `binarize_image.py`, class `ImageBinarizer`, method `thresholded_s_channel`. I obtained another binary version of the image by applying the sobel operator
+along the x axis, taking its absolute values and thresholding - method `sobelx`. The final binarizer
+takes these two binary images and returns their "and".
 
 ![alt text][binarized]
 
