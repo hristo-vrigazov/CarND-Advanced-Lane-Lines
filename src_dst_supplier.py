@@ -1,6 +1,6 @@
 import numpy as np
 
-def get_src_dst(img_size):
+def get_src_dst(img_size=(1280, 720)):
 	src = np.float32(
 	    [[(img_size[0] / 2) - 55, img_size[1] / 2 + 100],
 	    [((img_size[0] / 6) - 10), img_size[1]],

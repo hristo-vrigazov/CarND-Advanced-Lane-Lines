@@ -78,16 +78,16 @@ class CurvatureFinder:
 
 		ploty = np.linspace(0, binary_warped.shape[0]-1, binary_warped.shape[0])
 
+		# Generate x and y values for plotting
+		left_fitx = left_fit[0]*ploty**2 + left_fit[1]*ploty + left_fit[2]
+		right_fitx = right_fit[0]*ploty**2 + right_fit[1]*ploty + right_fit[2]
+
+		out_img[nonzeroy[left_lane_inds], nonzerox[left_lane_inds]] = [255, 0, 0]
+		out_img[nonzeroy[right_lane_inds], nonzerox[right_lane_inds]] = [0, 0, 255]
+			
 		if show_fit:
 			print(left_fit)
 			print(right_fit)
-
-			# Generate x and y values for plotting
-			left_fitx = left_fit[0]*ploty**2 + left_fit[1]*ploty + left_fit[2]
-			right_fitx = right_fit[0]*ploty**2 + right_fit[1]*ploty + right_fit[2]
-
-			out_img[nonzeroy[left_lane_inds], nonzerox[left_lane_inds]] = [255, 0, 0]
-			out_img[nonzeroy[right_lane_inds], nonzerox[right_lane_inds]] = [0, 0, 255]
 			plt.imshow(out_img)
 			plt.plot(left_fitx, ploty, color='yellow')
 			plt.plot(right_fitx, ploty, color='yellow')
@@ -110,4 +110,18 @@ class CurvatureFinder:
 		right_curverad = ((1 + (2*right_fit_cr[0]*right_y_eval*ym_per_pix + right_fit_cr[1])**2)**1.5) / np.absolute(2*right_fit_cr[0])
 		# Now our radius of curvature is in meters
 		print(left_curverad, 'm', right_curverad, 'm')
-		# Example values: 632.1 m    626.2 m
+		self.curvature_radius = (left_curverad + right_curverad) / 2.0
+
+		# Create an image to draw the lines on
+		warp_zero = np.zeros_like(binary_warped).astype(np.uint8)
+		color_warp = np.dstack((warp_zero, warp_zero, warp_zero))
+
+		# Recast the x and y points into usable format for cv2.fillPoly()
+		pts_left = np.array([np.transpose(np.vstack([left_fitx, ploty]))])
+		pts_right = np.array([np.flipud(np.transpose(np.vstack([right_fitx, ploty])))])
+		pts = np.hstack((pts_left, pts_right))
+
+		# Draw the lane onto the warped blank image
+		cv2.fillPoly(color_warp, np.int_([pts]), (0,255, 0))
+
+		return self.curvature_radius, 0.3, color_warp
