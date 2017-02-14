@@ -36,15 +36,6 @@ The goals / steps of this project are the following:
 [example_result]: ./output_images/example_pipeline.jpg "Example result"
 [video]: ./output_project_video.mp4 "Video"
 
-## [Rubric](https://review.udacity.com/#!/rubrics/571/view) Points
-###Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
-
----
-###Writeup / README
-
-####1. Provide a Writeup / README that includes all the rubric points and how you addressed each one.  You can submit your writeup as markdown or pdf.  [Here](https://github.com/udacity/CarND-Advanced-Lane-Lines/blob/master/writeup_template.md) is a template writeup for this project you can use as a guide and a starting point.  
-
-You're reading it!
 ###Camera Calibration
 
 ####1. Briefly state how you computed the camera matrix and distortion coefficients. Provide an example of a distortion corrected calibration image.
@@ -87,7 +78,7 @@ Test image                      |  Binarized
 ####3. Describe how (and identify where in your code) you performed a perspective transform and provide an example of a transformed image.
 
 The class `PerspectiveTransformer`, located in the file `transform_perspective.py`, is responsible for 
-the perspective transform. To construc an instance of this object, we must pass in the source and destination
+the perspective transform. To construct an instance of this object, we must pass in the source and destination
 points. Then the matrices for transorm and inverse transform are computed and they are later used in
 the `transform` and `inverse_transform` methods. The actual source and destination points are supplied
 using the `get_src_dst` function in the `src_dst_supplier.py` file and they are as following:
