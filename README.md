@@ -33,7 +33,9 @@ The goals / steps of this project are the following:
 [perspective_transformed]: ./output_images/perspective_transform.jpg "Perspective transformed"
 [binary_warped]: ./output_images/binary_warped.jpg "Binary warped"
 [binary_fitted]: ./output_images/binary_fitted.jpg "Binary fitted"
+[example_udacity]: ./examples/example_output.jpg "Example output"
 [example_result]: ./output_images/example_pipeline.jpg "Example result"
+[radius_formula]: ./radius_formula.png "Radius curvature formula"
 [video]: ./output_project_video.mp4 "Video"
 
 ###Camera Calibration
@@ -134,6 +136,8 @@ The road offset is computed in the `road_offset_finder.py` file. It takes the gr
 of the inverse transformed lanes, takes the first and the last nonzero coordinate in the last row, and takes 
 its mean. This is then compared to the center of the image, to find the road offset.
 
+![alt text][radius_formula]
+
 ####6. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.
 
 I implemented this step in `image_lane_detection.py` file, in the `draw_results` method of the `ImageLaneDetector` class.
@@ -162,3 +166,11 @@ is to train a neural network to predict the polynomial coefficients, using the d
 that the combination of Canny edge detection and hough transform is able to detect the trapezoi suitable for
 perspective transform quite well, and thus makes this part of the pipeline less likely to break, but of course 
 this slows down the pipeline a lot.
+Also, when we take a look at the formula by which we are computing the radius of the curvature:
+![alt text][radius_formula]
+we see that if we are driving and lines are close to straight, this weans that A will be close to 0,
+which would lead to a huge radius curvature value, when in fact, it should be close to zero, because
+we are not curving at all. This could be worked around by setting a threshold for A. Actually, the problem
+can be seen in the example image provided by Udacity:
+![alt text][example_udacity]
+The lanes are straight, there is absolutely no way we are curving at nearly 8 kms, which is what we are showing.
