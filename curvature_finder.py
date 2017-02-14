@@ -7,7 +7,7 @@ class CurvatureFinder:
 		pass
 		
 
-	def fit(self, binary_warped, show_fit=False):
+	def fit(self, binary_warped, undistorted_image, show_fit=False):
 		# Assuming you have created a warped binary image called "binary_warped"
 		# Take a histogram of the bottom half of the image
 		histogram = np.sum(binary_warped[binary_warped.shape[0]//2:,:], axis=0)
@@ -105,12 +105,12 @@ class CurvatureFinder:
 		# Fit new polynomials to x,y in world space
 		left_fit_cr = np.polyfit(lefty*ym_per_pix, leftx*xm_per_pix, 2)
 		right_fit_cr = np.polyfit(righty*ym_per_pix, rightx*xm_per_pix, 2)
+
 		# Calculate the new radii of curvature
 		left_curverad = ((1 + (2*left_fit_cr[0]*left_y_eval*ym_per_pix + left_fit_cr[1])**2)**1.5) / np.absolute(2*left_fit_cr[0])
 		right_curverad = ((1 + (2*right_fit_cr[0]*right_y_eval*ym_per_pix + right_fit_cr[1])**2)**1.5) / np.absolute(2*right_fit_cr[0])
 		# Now our radius of curvature is in meters
-		print(left_curverad, 'm', right_curverad, 'm')
-		self.curvature_radius = (left_curverad + right_curverad) / 2.0
+		self.curvature_radius = min(left_curverad, right_curverad)
 
 		# Create an image to draw the lines on
 		warp_zero = np.zeros_like(binary_warped).astype(np.uint8)
@@ -124,4 +124,4 @@ class CurvatureFinder:
 		# Draw the lane onto the warped blank image
 		cv2.fillPoly(color_warp, np.int_([pts]), (0,255, 0))
 
-		return self.curvature_radius, 0.3, color_warp
+		return self.curvature_radius, color_warp
