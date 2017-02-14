@@ -145,7 +145,8 @@ Binary warped                      |   Polynomial fitted
 
 ####5. Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
 
-I did this in lines # through # in my code in `my_other_file.py`
+The curvature is computed in `find_curvature` method, based on the formula [here](http://www.intmath.com/applications-differentiation/8-radius-curvature.php). It assumes that the curve of the road follows a circle.
+The road offset is computed in the `road_offset_finder.py` file.
 
 ####6. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.
 

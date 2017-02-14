@@ -43,17 +43,7 @@ class CurvatureFinder:
 		left_fitx = self.left_fit[0]*ploty**2 + self.left_fit[1]*ploty + self.left_fit[2]
 		right_fitx = self.right_fit[0]*ploty**2 + self.right_fit[1]*ploty + self.right_fit[2]
 
-		left_y_eval = np.max(lefty)
-		right_y_eval = np.max(righty)
-		# Fit new polynomials to x,y in world space
-		left_fit_cr = np.polyfit(lefty*self.ym_per_pix, leftx*self.xm_per_pix, 2)
-		right_fit_cr = np.polyfit(righty*self.ym_per_pix, rightx*self.xm_per_pix, 2)
-
-		# Calculate the new radii of curvature
-		left_curverad = ((1 + (2*left_fit_cr[0]*left_y_eval*self.ym_per_pix + left_fit_cr[1])**2)**1.5) / np.absolute(2*left_fit_cr[0])
-		right_curverad = ((1 + (2*right_fit_cr[0]*right_y_eval*self.ym_per_pix + right_fit_cr[1])**2)**1.5) / np.absolute(2*right_fit_cr[0])
-		# Now our radius of curvature is in meters
-		self.curvature_radius = min(left_curverad, right_curverad)
+		self.curvature_radius = self.find_curvature(leftx, lefty, rightx, righty)
 
 		# Create an image to draw the lines on
 		warp_zero = np.zeros_like(binary_warped).astype(np.uint8)
@@ -160,20 +150,8 @@ class CurvatureFinder:
 			plt.ylim(720, 0)
 			plt.show()
 
-
-
-		left_y_eval = np.max(lefty)
-		right_y_eval = np.max(righty)
-		# Fit new polynomials to x,y in world space
-		left_fit_cr = np.polyfit(lefty*self.ym_per_pix, leftx*self.xm_per_pix, 2)
-		right_fit_cr = np.polyfit(righty*self.ym_per_pix, rightx*self.xm_per_pix, 2)
-
-		# Calculate the new radii of curvature
-		left_curverad = ((1 + (2*left_fit_cr[0]*left_y_eval*self.ym_per_pix + left_fit_cr[1])**2)**1.5) / np.absolute(2*left_fit_cr[0])
-		right_curverad = ((1 + (2*right_fit_cr[0]*right_y_eval*self.ym_per_pix + right_fit_cr[1])**2)**1.5) / np.absolute(2*right_fit_cr[0])
-		# Now our radius of curvature is in meters
-		self.curvature_radius = min(left_curverad, right_curverad)
-
+		self.curvature_radius = self.find_curvature(leftx, lefty, rightx, righty)
+		
 		# Create an image to draw the lines on
 		warp_zero = np.zeros_like(binary_warped).astype(np.uint8)
 		color_warp = np.dstack((warp_zero, warp_zero, warp_zero))
@@ -190,3 +168,18 @@ class CurvatureFinder:
 		self.right_fit = right_fit
 
 		return self.curvature_radius, color_warp
+
+
+	def find_curvature(self, leftx, lefty, rightx, righty):
+		left_y_eval = np.max(lefty)
+		right_y_eval = np.max(righty)
+		# Fit new polynomials to x,y in world space
+		left_fit_cr = np.polyfit(lefty*self.ym_per_pix, leftx*self.xm_per_pix, 2)
+		right_fit_cr = np.polyfit(righty*self.ym_per_pix, rightx*self.xm_per_pix, 2)
+
+		# Calculate the new radii of curvature
+		left_curverad = ((1 + (2*left_fit_cr[0]*left_y_eval*self.ym_per_pix + left_fit_cr[1])**2)**1.5) / np.absolute(2*left_fit_cr[0])
+		right_curverad = ((1 + (2*right_fit_cr[0]*right_y_eval*self.ym_per_pix + right_fit_cr[1])**2)**1.5) / np.absolute(2*right_fit_cr[0])
+		# Now our radius of curvature is in meters
+		self.curvature_radius = min(left_curverad, right_curverad)
+		return self.curvature_radius
