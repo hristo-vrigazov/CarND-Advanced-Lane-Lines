@@ -38,9 +38,7 @@ The goals / steps of this project are the following:
 [perspective_transformed]: ./output_images/perspective_transform.jpg "Perspective transformed"
 [binary_warped]: ./output_images/binary_warped.jpg "Binary warped"
 [binary_fitted]: ./output_images/binary_fitted.jpg "Binary fitted"
-[image4]: ./examples/warped_straight_lines.jpg "Warp Example"
-[image5]: ./examples/color_fit_lines.jpg "Fit Visual"
-[image6]: ./examples/example_output.jpg "Output"
+[example_result]: ./examples/example_output.jpg "Example result"
 [video1]: ./project_video.mp4 "Video"
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/571/view) Points
@@ -148,13 +146,13 @@ Binary warped                      |   Polynomial fitted
 The curvature is computed in `find_curvature` method, based on the formula [here](http://www.intmath.com/applications-differentiation/8-radius-curvature.php). It assumes that the curve of the road follows a circle.
 The road offset is computed in the `road_offset_finder.py` file. It takes the green channel of the image 
 of the inverse transformed lanes, takes the first and the last nonzero coordinate in the last row, and takes 
-its mean. This is the compared to the center of the image.
+its mean. This is then compared to the center of the image, to find the road offset.
 
 ####6. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.
 
-I implemented this step in lines # through # in my code in `yet_another_file.py` in the function `map_lane()`.  Here is an example of my result on a test image:
+I implemented this step in `image_lane_detection.py` file, in the `draw_results` method of the `ImageLaneDetector` class.
 
-![alt text][image6]
+![alt text][example_result]
 
 ---
 
