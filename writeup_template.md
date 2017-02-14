@@ -33,7 +33,9 @@ The goals / steps of this project are the following:
 [test-undistorted]: ./output_images/test_undist.jpg "Undistorted test"
 [distorted]: ./test_images/test1.jpg "Distorted"
 [undistorted]: ./output_images/undistorted_example.jpg "Undistorted"
+[example_test_image]: ./test_images/test5.jpg "Example test image"
 [binarized]: ./output_images/binarized.jpg "Binary Example"
+[perspective_transformed]: ./output_images/perspective_transform.jpg "Perspective transformed"
 [image4]: ./examples/warped_straight_lines.jpg "Warp Example"
 [image5]: ./examples/color_fit_lines.jpg "Fit Visual"
 [image6]: ./examples/example_output.jpg "Output"
@@ -83,11 +85,18 @@ binarized version of the image, see the file `binarize_image.py`, class `ImageBi
 along the x axis, taking its absolute values and thresholding - method `sobelx`. The final binarizer
 takes these two binary images and returns their "and".
 
-![alt text][binarized]
+Test image                      |  Binarized
+:----------------------------:|:------------------------------:
+![alt text][example_test_image]| !![alt text][binarized]
+
 
 ####3. Describe how (and identify where in your code) you performed a perspective transform and provide an example of a transformed image.
 
-The code for my perspective transform includes a function called `warper()`, which appears in lines 1 through 8 in the file `example.py` (output_images/examples/example.py) (or, for example, in the 3rd code cell of the IPython notebook).  The `warper()` function takes as inputs an image (`img`), as well as source (`src`) and destination (`dst`) points.  I chose the hardcode the source and destination points in the following manner:
+The class `PerspectiveTransformer`, located in the file `transform_perspective.py`, is responsible for 
+the perspective transform. To construc an instance of this object, we must pass in the source and destination
+points. Then the matrices for transorm and inverse transform are computed and they are later used in
+the `transform` and `inverse_transform` methods. The actual source and destination points are supplied
+using the `get_src_dst` function in the `src_dst_supplier.py` file and they are as following:
 
 ```
 src = np.float32(
@@ -113,7 +122,9 @@ This resulted in the following source and destination points:
 
 I verified that my perspective transform was working as expected by drawing the `src` and `dst` points onto a test image and its warped counterpart to verify that the lines appear parallel in the warped image.
 
-![alt text][image4]
+Test image                      |  Transformed image
+:----------------------------:|:------------------------------:
+![alt text][example_test_image]| !![alt text][perspective_transformed]
 
 ####4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
 
