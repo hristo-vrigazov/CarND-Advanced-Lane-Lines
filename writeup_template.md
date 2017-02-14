@@ -33,7 +33,6 @@ The goals / steps of this project are the following:
 [test-undistorted]: ./output_images/test_undist.jpg "Undistorted test"
 [distorted]: ./test_images/test1.jpg "Distorted"
 [undistorted]: ./output_images/undistorted_example.jpg "Undistorted"
-[image2]: ./test_images/test1.jpg "Road Transformed"
 [binarized]: ./output_images/binarized.jpg "Binary Example"
 [image4]: ./examples/warped_straight_lines.jpg "Warp Example"
 [image5]: ./examples/color_fit_lines.jpg "Fit Visual"
@@ -63,20 +62,19 @@ I start by preparing "object points", which will be the (x, y, z) coordinates of
 I then used the output `objpoints` and `imgpoints` to compute the camera calibration and distortion coefficients using the `cv2.calibrateCamera()` function.  I then use this distortion correction to the test image using the `cv2.undistort()` function and obtained this result: 
 
 
-Original                      |  Undistorted
+Distorted                      |  Undistorted
 :----------------------------:|:------------------------------:
 ![alt text][test-distorted]| ![alt text][test-undistorted]
 
 ###Pipeline (single images)
 
 ####1. Provide an example of a distortion-corrected image.
-To demonstrate this step, I will describe how I apply the distortion correction to one of the test images like this one:
+In the `calibrate_camera.py` file, in the `CalibratedCamera` class, the undistort method
+uses the mtx and dst fields, which were initialized in the constuctor. See the example output:
 
-Before:
-![alt text][distorted]
-
-After:
-![alt text][undistorted]
+Distorted                      |  Undistorted
+:----------------------------:|:------------------------------:
+![alt text][distorted]| ![alt text][undistorted]
 
 ####2. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.
 
