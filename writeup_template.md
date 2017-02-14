@@ -129,7 +129,15 @@ Test image                      |  Transformed image
 
 ####4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
 
-The code for fitting the polynomial is located in the `curvature_finder.py` file.
+The code for fitting the polynomial is located in the `curvature_finder.py` file. When we are blindly fitting,
+that is without prior information (see method `fit_from_scratch`), we create a histogram of the sum of the non
+zero points in every column in the bottom half of the binary image, and then find the peaks on the left half
+of the image and on the right half of the image. We then use these as a starting point of a window search,
+which moves upward and adds new windows if they exceed a given threshold (`minpix`). The non zero points 
+in these windows are then used to fit a polynomial of second degree.
+
+In the case when we have already detected something in the previous frame (`fit_based_on_last_fit`), we just
+take the nonzero points that are in a given margin to the previous fit.
 
 Binary warped                      |   Polynomial fitted
 :----------------------------:|:------------------------------:

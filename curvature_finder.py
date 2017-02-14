@@ -74,7 +74,6 @@ class CurvatureFinder:
 
 
 	def fit_from_scratch(self, binary_warped, undistorted_image, show_fit=False):
-		# Assuming you have created a warped binary image called "binary_warped"
 		# Take a histogram of the bottom half of the image
 		histogram = np.sum(binary_warped[binary_warped.shape[0]//2:,:], axis=0)
 		# Create an output image to draw on and  visualize the result
