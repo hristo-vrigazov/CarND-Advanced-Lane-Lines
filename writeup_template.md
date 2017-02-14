@@ -1,8 +1,3 @@
-##Writeup Template
-###You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
-
----
-
 **Advanced Lane Finding Project**
 
 Quick commands:
@@ -38,8 +33,8 @@ The goals / steps of this project are the following:
 [perspective_transformed]: ./output_images/perspective_transform.jpg "Perspective transformed"
 [binary_warped]: ./output_images/binary_warped.jpg "Binary warped"
 [binary_fitted]: ./output_images/binary_fitted.jpg "Binary fitted"
-[example_result]: ./examples/example_pipeline.jpg "Example result"
-[video1]: ./project_video.mp4 "Video"
+[example_result]: ./output_images/example_pipeline.jpg "Example result"
+[video]: ./output_project_video.mp4 "Video"
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/571/view) Points
 ###Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
@@ -160,7 +155,7 @@ I implemented this step in `image_lane_detection.py` file, in the `draw_results`
 
 ####1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (wobbly lines are ok but no catastrophic failures that would cause the car to drive off the road!).
 
-Here's a [link to my video result](./project_video.mp4)
+Here's a [link to my video result](https://www.youtube.com/watch?v=MovcwGFtkwk)
 
 ---
 
@@ -168,5 +163,11 @@ Here's a [link to my video result](./project_video.mp4)
 
 ####1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
-Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
-
+I think that perhaps one of the most fragile components in the pipeline is the binarization. It is 
+extremely difficult to take into account all the different light conditions, road conditions, markings, and so on. My pipeline would fail if there are yellow / white lines on the road, such as during celebration, when the
+sun is shining and is reflected by the road heavily, and lots of other cases which would brake the binarization.
+This is of course a classical problem when we are using handcrafted features. One thing that we could do
+is to train a neural network to predict the polynomial coefficients, using the data created by our current pipeline, this way we could in theory be able to generalize easier to different road conditions. I also found
+that the combination of Canny edge detection and hough transform is able to detect the trapezoi suitable for
+perspective transform quite well, and thus makes this part of the pipeline less likely to break, but of course 
+this slows down the pipeline a lot.
