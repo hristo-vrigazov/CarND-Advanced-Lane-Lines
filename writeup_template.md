@@ -38,7 +38,7 @@ The goals / steps of this project are the following:
 [perspective_transformed]: ./output_images/perspective_transform.jpg "Perspective transformed"
 [binary_warped]: ./output_images/binary_warped.jpg "Binary warped"
 [binary_fitted]: ./output_images/binary_fitted.jpg "Binary fitted"
-[example_result]: ./examples/example_output.jpg "Example result"
+[example_result]: ./examples/example_pipeline.jpg "Example result"
 [video1]: ./project_video.mp4 "Video"
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/571/view) Points
