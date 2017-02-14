@@ -87,7 +87,7 @@ takes these two binary images and returns their "and".
 
 Test image                      |  Binarized
 :----------------------------:|:------------------------------:
-![alt text][example_test_image]| !![alt text][binarized]
+![alt text][example_test_image]| ![alt text][binarized]
 
 
 ####3. Describe how (and identify where in your code) you performed a perspective transform and provide an example of a transformed image.
@@ -124,7 +124,7 @@ I verified that my perspective transform was working as expected by drawing the 
 
 Test image                      |  Transformed image
 :----------------------------:|:------------------------------:
-![alt text][example_test_image]| !![alt text][perspective_transformed]
+![alt text][example_test_image]| ![alt text][perspective_transformed]
 
 ####4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
 
