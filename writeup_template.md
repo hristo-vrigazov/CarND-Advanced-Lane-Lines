@@ -36,6 +36,8 @@ The goals / steps of this project are the following:
 [example_test_image]: ./test_images/test5.jpg "Example test image"
 [binarized]: ./output_images/binarized.jpg "Binary Example"
 [perspective_transformed]: ./output_images/perspective_transform.jpg "Perspective transformed"
+[binary_warped]: ./output_images/binary_warped.jpg "Binary warped"
+[binary_fitted]: ./output_images/binary_fitted.jpg "Binary fitted"
 [image4]: ./examples/warped_straight_lines.jpg "Warp Example"
 [image5]: ./examples/color_fit_lines.jpg "Fit Visual"
 [image6]: ./examples/example_output.jpg "Output"
@@ -128,9 +130,11 @@ Test image                      |  Transformed image
 
 ####4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
 
-Then I did some other stuff and fit my lane lines with a 2nd order polynomial kinda like this:
+YoyO:
 
-![alt text][image5]
+Binary warped                      |   Polynomial fitted
+:----------------------------:|:------------------------------:
+![alt text][binary_warped]| ![alt text][binary_fitted]
 
 ####5. Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
 
