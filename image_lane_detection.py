@@ -34,7 +34,7 @@ class ImageLaneDetector:
         result = cv2.addWeighted(source_img, 1, lanes_image, 0.3, 0)
         font = cv2.FONT_HERSHEY_SIMPLEX
         cv2.putText(result, 'Radius of Curvature = %d(m)' % curvature_radius, (50, 50), font, 1, (255, 255, 255), 2)   
-        left_or_right = 'left' if road_offset < 0 else 'right'
+        left_or_right = 'right' if road_offset < 0 else 'left'
         cv2.putText(result, 'Offset: %.2fm %s' % (np.abs(road_offset), left_or_right), (50, 100), font, 1,
                     (255, 255, 255), 2)
         return result

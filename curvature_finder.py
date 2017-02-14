@@ -4,10 +4,76 @@ import cv2
 
 class CurvatureFinder:
 	def __init__(self):
-		pass
+		self.left_fit = None
+		self.right_fit = None
+		self.ym_per_pix = 30/720 # meters per pixel in y dimension
+		self.xm_per_pix = 3.7/700 # meters per pixel in x dimension
 		
 
 	def fit(self, binary_warped, undistorted_image, show_fit=False):
+		if self.left_fit is not None and self.right_fit is not None:
+			return self.fit_based_on_last_fit(binary_warped, undistorted_image, show_fit=show_fit)
+		return self.fit_from_scratch(binary_warped, undistorted_image, show_fit=show_fit)
+
+
+	def fit_based_on_last_fit(self, binary_warped, undistorted_image, show_fit=False):
+		# Assume you now have a new warped binary image 
+		# from the next frame of video (also called "binary_warped")
+		# It's now much easier to find line pixels!
+		left_fit = self.left_fit
+		right_fit = self.right_fit
+
+		nonzero = binary_warped.nonzero()
+		nonzeroy = np.array(nonzero[0])
+		nonzerox = np.array(nonzero[1])
+		margin = 100
+		left_lane_inds = ((nonzerox > (left_fit[0]*(nonzeroy**2) + left_fit[1]*nonzeroy + left_fit[2] - margin)) & (nonzerox < (left_fit[0]*(nonzeroy**2) + left_fit[1]*nonzeroy + left_fit[2] + margin))) 
+		right_lane_inds = ((nonzerox > (right_fit[0]*(nonzeroy**2) + right_fit[1]*nonzeroy + right_fit[2] - margin)) & (nonzerox < (right_fit[0]*(nonzeroy**2) + right_fit[1]*nonzeroy + right_fit[2] + margin)))  
+
+		# Again, extract left and right line pixel positions
+		leftx = nonzerox[left_lane_inds]
+		lefty = nonzeroy[left_lane_inds] 
+		rightx = nonzerox[right_lane_inds]
+		righty = nonzeroy[right_lane_inds]
+		# Fit a second order polynomial to each
+		left_fit = np.polyfit(lefty, leftx, 2)
+		right_fit = np.polyfit(righty, rightx, 2)
+		# Generate x and y values for plotting
+		ploty = np.linspace(0, binary_warped.shape[0]-1, binary_warped.shape[0] )
+		left_fitx = self.left_fit[0]*ploty**2 + self.left_fit[1]*ploty + self.left_fit[2]
+		right_fitx = self.right_fit[0]*ploty**2 + self.right_fit[1]*ploty + self.right_fit[2]
+
+		left_y_eval = np.max(lefty)
+		right_y_eval = np.max(righty)
+		# Fit new polynomials to x,y in world space
+		left_fit_cr = np.polyfit(lefty*self.ym_per_pix, leftx*self.xm_per_pix, 2)
+		right_fit_cr = np.polyfit(righty*self.ym_per_pix, rightx*self.xm_per_pix, 2)
+
+		# Calculate the new radii of curvature
+		left_curverad = ((1 + (2*left_fit_cr[0]*left_y_eval*self.ym_per_pix + left_fit_cr[1])**2)**1.5) / np.absolute(2*left_fit_cr[0])
+		right_curverad = ((1 + (2*right_fit_cr[0]*right_y_eval*self.ym_per_pix + right_fit_cr[1])**2)**1.5) / np.absolute(2*right_fit_cr[0])
+		# Now our radius of curvature is in meters
+		self.curvature_radius = min(left_curverad, right_curverad)
+
+		# Create an image to draw the lines on
+		warp_zero = np.zeros_like(binary_warped).astype(np.uint8)
+		color_warp = np.dstack((warp_zero, warp_zero, warp_zero))
+
+		# Recast the x and y points into usable format for cv2.fillPoly()
+		pts_left = np.array([np.transpose(np.vstack([left_fitx, ploty]))])
+		pts_right = np.array([np.flipud(np.transpose(np.vstack([right_fitx, ploty])))])
+		pts = np.hstack((pts_left, pts_right))
+
+		# Draw the lane onto the warped blank image
+		cv2.fillPoly(color_warp, np.int_([pts]), (0,255, 0))
+
+		self.left_fit = left_fit
+		self.right_fit = right_fit
+
+		return self.curvature_radius, color_warp
+
+
+	def fit_from_scratch(self, binary_warped, undistorted_image, show_fit=False):
 		# Assuming you have created a warped binary image called "binary_warped"
 		# Take a histogram of the bottom half of the image
 		histogram = np.sum(binary_warped[binary_warped.shape[0]//2:,:], axis=0)
@@ -96,19 +162,16 @@ class CurvatureFinder:
 			plt.show()
 
 
+
 		left_y_eval = np.max(lefty)
 		right_y_eval = np.max(righty)
-
-		ym_per_pix = 30/720 # meters per pixel in y dimension
-		xm_per_pix = 3.7/700 # meters per pixel in x dimension
-
 		# Fit new polynomials to x,y in world space
-		left_fit_cr = np.polyfit(lefty*ym_per_pix, leftx*xm_per_pix, 2)
-		right_fit_cr = np.polyfit(righty*ym_per_pix, rightx*xm_per_pix, 2)
+		left_fit_cr = np.polyfit(lefty*self.ym_per_pix, leftx*self.xm_per_pix, 2)
+		right_fit_cr = np.polyfit(righty*self.ym_per_pix, rightx*self.xm_per_pix, 2)
 
 		# Calculate the new radii of curvature
-		left_curverad = ((1 + (2*left_fit_cr[0]*left_y_eval*ym_per_pix + left_fit_cr[1])**2)**1.5) / np.absolute(2*left_fit_cr[0])
-		right_curverad = ((1 + (2*right_fit_cr[0]*right_y_eval*ym_per_pix + right_fit_cr[1])**2)**1.5) / np.absolute(2*right_fit_cr[0])
+		left_curverad = ((1 + (2*left_fit_cr[0]*left_y_eval*self.ym_per_pix + left_fit_cr[1])**2)**1.5) / np.absolute(2*left_fit_cr[0])
+		right_curverad = ((1 + (2*right_fit_cr[0]*right_y_eval*self.ym_per_pix + right_fit_cr[1])**2)**1.5) / np.absolute(2*right_fit_cr[0])
 		# Now our radius of curvature is in meters
 		self.curvature_radius = min(left_curverad, right_curverad)
 
@@ -123,5 +186,8 @@ class CurvatureFinder:
 
 		# Draw the lane onto the warped blank image
 		cv2.fillPoly(color_warp, np.int_([pts]), (0,255, 0))
+
+		self.left_fit = left_fit
+		self.right_fit = right_fit
 
 		return self.curvature_radius, color_warp

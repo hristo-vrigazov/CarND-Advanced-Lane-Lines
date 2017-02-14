@@ -82,10 +82,9 @@ Distorted                      |  Undistorted
 
 ####2. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.
 
-I converted the image to HLS color space, and then used a threshold on the S channel to obtain a first
-binarized version of the image, see the file `binarize_image.py`, class `ImageBinarizer`, method `thresholded_s_channel`. I obtained another binary version of the image by applying the sobel operator
-along the x axis, taking its absolute values and thresholding - method `sobelx`. The final binarizer
-takes these two binary images and returns their "and".
+I experimented with different ways to binarize the image (see the file `binarize_image.py`). I converted the image to HLS color space, and then used a thresholding, and combined that with normal grayscale thresholding.
+I also experimented with different adaptive thresholding, like Gaussian for example, but they did not seem
+to produce reliable results.
 
 Test image                      |  Binarized
 :----------------------------:|:------------------------------:
@@ -130,7 +129,7 @@ Test image                      |  Transformed image
 
 ####4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
 
-YoyO:
+The code for fitting the polynomial is located in the `curvature_finder.py` file.
 
 Binary warped                      |   Polynomial fitted
 :----------------------------:|:------------------------------:
