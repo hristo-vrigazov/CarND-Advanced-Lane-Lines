@@ -38,9 +38,9 @@ The goals / steps of this project are the following:
 [radius_formula]: ./radius_formula.png "Radius curvature formula"
 [video]: ./output_project_video.mp4 "Video"
 
-###Camera Calibration
+### Camera Calibration
 
-####1. Briefly state how you computed the camera matrix and distortion coefficients. Provide an example of a distortion corrected calibration image.
+#### 1. Briefly state how you computed the camera matrix and distortion coefficients. Provide an example of a distortion corrected calibration image.
 
 The code for this step is contained in the `calibrate_camera.py` file, in the `CalibratedCamera` class.
 This class is an abstraction of a calibrated camera, and in this contructor, it sets mtx and dist 
@@ -138,7 +138,7 @@ its mean. This is then compared to the center of the image, to find the road off
 
 ![alt text][radius_formula]
 
-####6. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.
+#### 6. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.
 
 I implemented this step in `image_lane_detection.py` file, in the `draw_results` method of the `ImageLaneDetector` class.
 
@@ -146,17 +146,17 @@ I implemented this step in `image_lane_detection.py` file, in the `draw_results`
 
 ---
 
-###Pipeline (video)
+### Pipeline (video)
 
-####1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (wobbly lines are ok but no catastrophic failures that would cause the car to drive off the road!).
+#### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (wobbly lines are ok but no catastrophic failures that would cause the car to drive off the road!).
 
 Here's a [link to my video result](https://www.youtube.com/watch?v=MovcwGFtkwk)
 
 ---
 
-###Discussion
+### Discussion
 
-####1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
+#### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
 I think that perhaps one of the most fragile components in the pipeline is the binarization. It is 
 extremely difficult to take into account all the different light conditions, road conditions, markings, and so on. My pipeline would fail if there are yellow / white lines on the road, such as during celebration, when the
