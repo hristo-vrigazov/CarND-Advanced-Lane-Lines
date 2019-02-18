@@ -58,7 +58,7 @@ Distorted                      |  Undistorted
 
 ###Pipeline (single images)
 
-####1. Provide an example of a distortion-corrected image.
+#### 1. Provide an example of a distortion-corrected image.
 In the `calibrate_camera.py` file, in the `CalibratedCamera` class, the undistort method
 uses the mtx and dst fields, which were initialized in the constuctor. See the example output:
 
@@ -66,7 +66,7 @@ Distorted                      |  Undistorted
 :----------------------------:|:------------------------------:
 ![alt text][distorted]| ![alt text][undistorted]
 
-####2. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.
+#### 2. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.
 
 I experimented with different ways to binarize the image (see the file `binarize_image.py`). I converted the image to HLS color space, and then used a thresholding, and combined that with normal grayscale thresholding.
 I also experimented with different adaptive thresholding, like Gaussian for example, but they did not seem
@@ -77,7 +77,7 @@ Test image                      |  Binarized
 ![alt text][example_test_image]| ![alt text][binarized]
 
 
-####3. Describe how (and identify where in your code) you performed a perspective transform and provide an example of a transformed image.
+#### 3. Describe how (and identify where in your code) you performed a perspective transform and provide an example of a transformed image.
 
 The class `PerspectiveTransformer`, located in the file `transform_perspective.py`, is responsible for 
 the perspective transform. To construct an instance of this object, we must pass in the source and destination
@@ -113,7 +113,7 @@ Test image                      |  Transformed image
 :----------------------------:|:------------------------------:
 ![alt text][example_test_image]| ![alt text][perspective_transformed]
 
-####4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
+#### 4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
 
 The code for fitting the polynomial is located in the `curvature_finder.py` file. When we are blindly fitting,
 that is without prior information (see method `fit_from_scratch`), we create a histogram of the sum of the non
@@ -129,7 +129,7 @@ Binary warped                      |   Polynomial fitted
 :----------------------------:|:------------------------------:
 ![alt text][binary_warped]| ![alt text][binary_fitted]
 
-####5. Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
+#### 5. Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
 
 The curvature is computed in `find_curvature` method, based on the formula [here](http://www.intmath.com/applications-differentiation/8-radius-curvature.php). It assumes that the curve of the road follows a circle.
 The road offset is computed in the `road_offset_finder.py` file. It takes the green channel of the image 
